@@ -25,38 +25,40 @@ const svg = d3.select("#chart-container")
 // This will be replaced with live population data (API)
 
 const dataset = [
-  { date: new Date("2022-01-01"), value: 200 },
-  { date: new Date("2022-02-01"), value: 250 },
-  { date: new Date("2022-03-01"), value: 180 },
-  { date: new Date("2022-04-01"), value: 300 },
-  { date: new Date("2022-05-01"), value: 280 },
-  { date: new Date("2022-06-01"), value: 220 },
-  { date: new Date("2022-07-01"), value: 300 },
-  { date: new Date("2022-08-01"), value: 450 },
-  { date: new Date("2022-09-01"), value: 280 },
-  { date: new Date("2022-10-01"), value: 600 },
-  { date: new Date("2022-11-01"), value: 780 },
-  { date: new Date("2022-12-01"), value: 320 }
+  { date: new Date("2022-01-01"), population: 200 },
+  { date: new Date("2022-02-01"), population: 250 },
+  { date: new Date("2022-03-01"), population: 180 },
+  { date: new Date("2022-04-01"), population: 300 },
+  { date: new Date("2022-05-01"), population: 280 },
+  { date: new Date("2022-06-01"), population: 220 },
+  { date: new Date("2022-07-01"), population: 300 },
+  { date: new Date("2022-08-01"), population: 450 },
+  { date: new Date("2022-09-01"), population: 280 },
+  { date: new Date("2022-10-01"), population: 600 },
 ];
 
 // New York Population Dataset
 
 d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").then(function (data){
-  const parseYear = d3.timeParse('%Y');
 
-  data.forEach(d => {
-    d.date = parseYear(d.date);
-    d.population = +d.population;
-  });
+    let NYC = (data[0])
+    let date = (Object.keys(NYC).slice(0,10))
+    let population = (Object.values(NYC).slice(0,10))
 
-  console.log(data);
-});
+    
+    const updatedDataset = dataset.map((entry, index) => ({
+      date: new Date(date[index]),
+      population: parseInt(population[index], 10),
+    }));
+    
+    console.log(updatedDataset);
+
 
 
 // 
 
-x.domain(d3.extent(dataset, d => d.date));
-y.domain([0, d3.max(dataset, d => d.value)]);
+x.domain(d3.extent(updatedDataset, d => d.date));
+y.domain([0, d3.max(updatedDataset, d => d.population)]);
 
 // 
 
@@ -76,13 +78,15 @@ svg.append("g")
 
 const line = d3.line()
   .x(d => x(d.date))
-  .y(d => y(d.value));
+  .y(d => y(d.population));
 
 // 
 
 svg.append("path")
-  .datum(dataset)
+  .datum(updatedDataset)
   .attr("fill", "none")
   .attr("stroke", "red")
   .attr("stroke-width", 2)
   .attr("d", line);
+
+  })

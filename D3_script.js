@@ -50,31 +50,73 @@ d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").t
       date: new Date(date[index]),
       population: parseInt(population[index], 10),
     }));
-    
-    console.log(updatedDataset);
 
 
 
 // 
 
 x.domain(d3.extent(updatedDataset, d => d.date));
-y.domain([0, d3.max(updatedDataset, d => d.population)]);
+y.domain([7000000, d3.max(updatedDataset, d => d.population)]);
 
 // 
 
 svg.append("g")
   .attr("transform", `translate(0,${height})`)
+  .style("font-size", "14px")
   .call(d3.axisBottom(x)
-    .ticks(d3.timeMonth.every(1)) 
-    .tickFormat(d3.timeFormat("%b %Y"))); 
+    .ticks(d3.timeYear.every(5)) 
+    .tickFormat(d3.timeFormat("%Y")))
+    .call(g => g.select(".domain").remove())
+    .selectAll(".tick line")
+    .style("stroke-opacity", 0)
+    svg.selectAll(".tick text")
+    .attr("fill", "#777"); 
 
 
 // 
 
 svg.append("g")
-  .call(d3.axisLeft(y))
+  .style("font-size", "14px")
+  .call(d3.axisLeft(y)
+  .tickSize(0)
+  .tickPadding(10))
+  .call(g => g.select(".domain").remove())
+  .selectAll(".tick text")
+  .style("fill", "#777")
+  .style("visibility", (d, i, nodes) => {
+    if(i === 0){
+      return "hidden"
+    }
+    else {
+      return "visible"
+    }
+  });
 
 // 
+
+svg.selectAll("xGrid")
+.data(x.ticks().slice(1))
+.join("line")
+.attr("x1", d => x(d))
+.attr("x2", d => x(d))
+.attr("y1", 0)
+.attr("y2", height)
+.attr("stroke", "#e0e0e0")
+.attr("stroke-width", .5)
+
+//
+
+svg.selectAll("yGrid")
+.data(y.ticks().slice(1))
+.join("line")
+.attr("x1", d => 0)
+.attr("x2", d => width)
+.attr("y1", d => y(d))
+.attr("y2", d => y(d))
+.attr("stroke", "#e0e0e0")
+.attr("stroke-width", .5)
+
+
 
 const line = d3.line()
   .x(d => x(d.date))
@@ -85,8 +127,7 @@ const line = d3.line()
 svg.append("path")
   .datum(updatedDataset)
   .attr("fill", "none")
-  .attr("stroke", "red")
+  .attr("stroke", "royalblue")
   .attr("stroke-width", 2)
   .attr("d", line);
-
   })

@@ -1,11 +1,11 @@
-// 
 
+// setting the scale of the graph's container
 
 const margin = { top: 70, right: 30, bottom: 40, left: 80 };
 const width = 1200 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
-//
+// setting the scale of the x and y axis
 
 const x = d3.scaleTime()
   .range([0, width]);
@@ -13,7 +13,7 @@ const x = d3.scaleTime()
 const y = d3.scaleLinear()
   .range([height, 0]);
 
-// 
+// creating the container for the graph
 
 const svg = d3.select("#chart-container")
   .append("svg")
@@ -51,14 +51,12 @@ d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").t
       population: parseInt(population[index], 10),
     }));
 
-
-
-// 
+// setting y axis scale
 
 x.domain(d3.extent(updatedDataset, d => d.date));
 y.domain([7000000, d3.max(updatedDataset, d => d.population)]);
 
-// 
+// the x axis
 
 svg.append("g")
   .attr("transform", `translate(0,${height})`)
@@ -73,10 +71,10 @@ svg.append("g")
     .attr("fill", "#777"); 
 
 
-// 
+// the y axis 
 
 svg.append("g")
-  .style("font-size", "14px")
+  .style("font-size", "10px")
   .call(d3.axisLeft(y)
   .tickSize(0)
   .tickPadding(10))
@@ -92,7 +90,7 @@ svg.append("g")
     }
   });
 
-// 
+// vertical graph lines
 
 svg.selectAll("xGrid")
 .data(x.ticks().slice(1))
@@ -104,7 +102,7 @@ svg.selectAll("xGrid")
 .attr("stroke", "#e0e0e0")
 .attr("stroke-width", .5)
 
-//
+// horizontal graph lines
 
 svg.selectAll("yGrid")
 .data(y.ticks().slice(1))
@@ -116,13 +114,46 @@ svg.selectAll("yGrid")
 .attr("stroke", "#e0e0e0")
 .attr("stroke-width", .5)
 
+// title of the graph
+
+svg.append("text")
+.attr("class", "chart-title")
+.attr("x", margin.right + 200)
+.attr("y", margin.top - 100)
+.style("font-size", "24px")
+.style("font-weight", "bold")
+.style("font-family", "sans-serif")
+.text("Historical and Projected Population of New York City")
+
+// adding y axis title
+
+svg.append("text")
+.attr("transform", "rotate(-90)")
+.attr("y", 0 - margin.left)
+.attr("x", 0 - (height / 2))
+.attr("dy", "1em")
+.style("text-anchor", "middle")
+.style("font-size", "14px")
+.style("fill", "#777")
+.style("font-family", "sans-serif")
+.text("Total Population")
+
+// adding source credit
+
+svg.append("text")
+.attr("class", "source-credit")
+.attr("x", width - 1150)
+.attr("y", height + margin.bottom + 0.1)
+.style("font-size", "7px")
+.style("font-family", "sans-serif")
+.text("Source: https://data.cityofnewyork.us/")
 
 
 const line = d3.line()
   .x(d => x(d.date))
   .y(d => y(d.population));
 
-// 
+// plotting the line of the graph
 
 svg.append("path")
   .datum(updatedDataset)

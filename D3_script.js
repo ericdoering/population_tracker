@@ -22,6 +22,12 @@ const svg = d3.select("#chart-container")
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
+// adding tooltip 
+
+const toolTip = d3.select("body")
+.append("div")
+.attr("class", "tool-tip")
+
 // This will be replaced with live population data (API)
 
 const dataset = [
@@ -123,7 +129,7 @@ svg.append("text")
 .style("font-size", "24px")
 .style("font-weight", "bold")
 .style("font-family", "sans-serif")
-.text("Historical and Projected Population of New York City")
+.text("Historical and Projected Population of New York City (1950 - 2040)")
 
 // adding y axis title
 
@@ -138,6 +144,19 @@ svg.append("text")
 .style("font-family", "sans-serif")
 .text("Total Population")
 
+// adding x axis title
+
+svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "middle")
+    .attr("x", width - 570)
+    .attr("y", height + 40)
+    .style("fill", "#777")
+    .style("font-size", "14px")
+    .style("font-family", "sans-serif")
+    .text("Year");
+
+
 // adding source credit
 
 svg.append("text")
@@ -147,6 +166,8 @@ svg.append("text")
 .style("font-size", "7px")
 .style("font-family", "sans-serif")
 .text("Source: https://data.cityofnewyork.us/")
+
+
 
 
 const line = d3.line()
@@ -161,4 +182,68 @@ svg.append("path")
   .attr("stroke", "royalblue")
   .attr("stroke-width", 2)
   .attr("d", line);
-  })
+
+  // Adding circle to graph when it intersection
+
+  const circle = svg.append("circle")
+    .attr("r", 0)
+    .attr("fill", "steelblue")
+    .style("stroke", "white")
+    .attr("opacity", 0.70)
+    .style("pointer-events", "none");
+
+  // Adding the rect layer over the graph
+
+  const listeningRect = svg.append("rect")
+  .attr("width", width)
+  .attr("height", height);
+
+  // setting up the mouse over event
+
+  listeningRect.on("mousemove", function (event) {
+    const [xCoord] = d3.pointer(event, this);
+    const bisectDate = d3.bisector(d => d.date).left;
+    const x0 = x.invert(xCoord);
+    const i = bisectDate(updatedDataset, x0, 1);
+    const d0 = updatedDataset[i - 1];
+    const d1 = updatedDataset[i];
+    const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+    const xPos = x(d.date);
+    const yPos = y(d.population);
+
+  // Update the circle position
+
+    circle.attr("cx", xPos)
+      .attr("cy", yPos);
+
+
+  // Adding the circle radius
+
+  circle.transition()
+  .duration(50)
+  .attr("r", 5);
+
+  // Adding the lable
+
+  toolTip
+  .style("display", "block")
+  .style("left", `${xPos + 100}px`)
+  .style("top", `${yPos + 50}px`)
+  .html(`<strong>Date:</strong> ${d.date.toLocaleDateString()}<br><strong>Population:</strong> ${d.population.toLocaleString() !== undefined ? (d.population).toLocaleString() : 'N/A'}`)
+  });
+
+  // Removing the lable from the graph
+
+  listeningRect.on("mouseleave", function () {
+    circle.transition()
+      .duration(50)
+      .attr("r", 0);
+
+    toolTip.style("display", "none");
+  });
+
+});
+
+
+
+

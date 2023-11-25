@@ -9,7 +9,7 @@ rect {
     z-index: 1;
 }
 
-.tool-tip {
+.tool-tip-NYC {
     position: absolute;
     padding: 10px;
     background-color: steelblue;

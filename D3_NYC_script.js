@@ -1,21 +1,21 @@
 
 // setting the scale of the graph's container
 
-const margin = { top: 70, right: 30, bottom: 40, left: 80 };
-const width = 1200 - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
+let margin = { top: 70, right: 30, bottom: 40, left: 80 };
+let width = 1200 - margin.left - margin.right;
+let height = 500 - margin.top - margin.bottom;
 
 // setting the scale of the x and y axis
 
-const x = d3.scaleTime()
+let x = d3.scaleTime()
   .range([0, width]);
 
-const y = d3.scaleLinear()
+let y = d3.scaleLinear()
   .range([height, 0]);
 
 // creating the container for the graph
 
-const svg = d3.select("#chart-container")
+let svg = d3.select("#chart-container-NYC")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -24,13 +24,13 @@ const svg = d3.select("#chart-container")
 
 // adding tooltip 
 
-const toolTip = d3.select("body")
+let toolTip = d3.select("body")
 .append("div")
-.attr("class", "tool-tip")
+.attr("class", "tool-tip-NYC")
 
 // This will be replaced with live population data (API)
 
-const dataset = [
+let dataset = [
   { date: new Date("2022-01-01"), population: 200 },
   { date: new Date("2022-02-01"), population: 250 },
   { date: new Date("2022-03-01"), population: 180 },
@@ -52,7 +52,7 @@ d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").t
     let population = (Object.values(NYC).slice(0,10))
 
     
-    const updatedDataset = dataset.map((entry, index) => ({
+    let updatedDataset = dataset.map((entry, index) => ({
       date: new Date(date[index]),
       population: parseInt(population[index], 10),
     }));
@@ -170,7 +170,7 @@ svg.append("text")
 
 
 
-const line = d3.line()
+let line = d3.line()
   .x(d => x(d.date))
   .y(d => y(d.population));
 
@@ -185,7 +185,7 @@ svg.append("path")
 
   // Adding circle to graph when it intersection
 
-  const circle = svg.append("circle")
+  let circle = svg.append("circle")
     .attr("r", 0)
     .attr("fill", "steelblue")
     .style("stroke", "white")
@@ -194,22 +194,22 @@ svg.append("path")
 
   // Adding the rect layer over the graph
 
-  const listeningRect = svg.append("rect")
+  let listeningRect = svg.append("rect")
   .attr("width", width)
   .attr("height", height);
 
   // setting up the mouse over event
 
   listeningRect.on("mousemove", function (event) {
-    const [xCoord] = d3.pointer(event, this);
-    const bisectDate = d3.bisector(d => d.date).left;
-    const x0 = x.invert(xCoord);
-    const i = bisectDate(updatedDataset, x0, 1);
-    const d0 = updatedDataset[i - 1];
-    const d1 = updatedDataset[i];
-    const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-    const xPos = x(d.date);
-    const yPos = y(d.population);
+    let [xCoord] = d3.pointer(event, this);
+    let bisectDate = d3.bisector(d => d.date).left;
+    let x0 = x.invert(xCoord);
+    let i = bisectDate(updatedDataset, x0, 1);
+    let d0 = updatedDataset[i - 1];
+    let d1 = updatedDataset[i];
+    let d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+    let xPos = x(d.date);
+    let yPos = y(d.population);
 
   // Update the circle position
 

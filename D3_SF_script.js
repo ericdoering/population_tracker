@@ -1,3 +1,5 @@
+
+
 let margin = { top: 70, right: 30, bottom: 40, left: 80 };
 let width = 1200 - margin.left - margin.right;
 let height = 500 - margin.top - margin.bottom;
@@ -40,22 +42,27 @@ let dataset = [
   { date: new Date("2022-10-01"), population: 600 },
 ];
 
-
-d3.csv("population_data/San_Francisco-population.csv").then(function (data){
-
-    console.log(data)
-
-    // let date = (Object.values(SF).slice(15,25))
-    // let population = (SF)
+d3.json("population_data/San_Francisco-population.json").then(function (data){
 
 
+    let mergedDataset = dataset.map((existingDataPoint) => {
+        // Find the corresponding population data point with the same date
+        let matchingPopulationData = newPopulationData.find(
+          (newDataPoint) => newDataPoint.Date === existingDataPoint.date.toISOString().split('T')[0]
+        );
+      
+        // If a matching population data point is found, update the population value
+        if (matchingPopulationData) {
+          existingDataPoint.population = matchingPopulationData.Population;
+        }
+      
+        return existingDataPoint;
+      });
 
-    // let population = (Object.values(NYC).slice(0,10))
-
-    
     // let updatedDataset = dataset.map((entry, index) => ({
-    //   date: new Date(date[index]),
-    //   population: parseInt(population[index], 10),
-    // }))
+    //     date: new Date(date[index]),
+    //     population: parseInt(population[index], 10),
+    //   }));
 
+ 
 })

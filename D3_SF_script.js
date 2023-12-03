@@ -53,7 +53,6 @@ d3.json("population_data/San_Francisco-population.json").then(function (data){
     population: parseInt(population[index], 10),
   }));
 
-  console.log(population)
 
   // setting y axis scale
 
@@ -97,7 +96,7 @@ svg.append("g")
   // vertical graph lines
 
 svg.selectAll("xGrid")
-.data(x.ticks().slice(1))
+.data(x.ticks().slice(0))
 .join("line")
 .attr("x1", d => x(d))
 .attr("x2", d => x(d))
@@ -109,7 +108,7 @@ svg.selectAll("xGrid")
 // horizontal graph lines
 
 svg.selectAll("yGrid")
-.data(y.ticks().slice(1))
+.data(y.ticks().slice(0))
 .join("line")
 .attr("x1", 0)
 .attr("x2", width)
@@ -162,7 +161,7 @@ svg.append("text")
 .attr("y", height + margin.bottom + 0.1)
 .style("font-size", "7px")
 .style("font-family", "sans-serif")
-.text("Source: https://data.cityofnewyork.us/")
+.text("Source: https://www.macrotrends.net/cities/23130/san-francisco/population")
 
 
 let line = d3.line()
@@ -178,4 +177,63 @@ svg.append("path")
   .attr("stroke-width", 2)
   .attr("d", line);
 
-})
+
+  // Adding circle to graph when it intersection
+
+  let circle = svg.append("circle")
+    .attr("r", 0)
+    .attr("fill", "steelblue")
+    .style("stroke", "white")
+    .attr("opacity", 0.70)
+    .style("pointer-events", "none");
+
+  // Adding the rect layer over the graph
+
+  let listeningRect = svg.append("rect")
+  .attr("width", width)
+  .attr("height", height);
+
+   // setting up the mouse over event
+
+   listeningRect.on("mousemove", function (event) {
+    let [xCoord] = d3.pointer(event, this);
+    let bisectDate = d3.bisector(d => d.date).left;
+    let x0 = x.invert(xCoord);
+    let i = bisectDate(updatedDataset, x0, 1);
+    let d0 = updatedDataset[i - 1];
+    let d1 = updatedDataset[i];
+    let d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+    let xPos = x(d.date);
+    let yPos = y(d.population);
+
+  // Update the circle position
+
+    circle.attr("cx", xPos)
+      .attr("cy", yPos);
+
+    // Adding the circle radius
+
+    circle.transition()
+    .duration(50)
+    .attr("r", 5);
+  
+    // Adding the lable
+  
+    toolTip
+    .style("display", "block")
+    .style("left", `${xPos + 100}px`)
+    .style("top", `${yPos + 50}px`)
+    .html(`<strong>Date:</strong> ${d.date.toLocaleDateString()}<br><strong>Population:</strong> ${d.population.toLocaleString() !== undefined ? (d.population).toLocaleString() : 'N/A'}`)
+    });
+  
+    // Removing the lable from the graph
+  
+    listeningRect.on("mouseleave", function () {
+      circle.transition()
+        .duration(50)
+        .attr("r", 0);
+  
+      toolTip.style("display", "none");
+    });
+  
+  });

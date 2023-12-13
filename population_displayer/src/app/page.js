@@ -1,13 +1,13 @@
 "use client";
 
-import { nycGraph } from "./components/nycGraph"
+import { NewYorkGraph } from "./components/NewYorkGraph"
 
 
 export default function Home() {
   return (
       <>
         <h1>Testing to see if this works</h1>
-        <nycGraph />
+        <NewYorkGraph />
       </>
   )
 }

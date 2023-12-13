@@ -2,8 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import * as d3 from "d3";
-// setting the scale of the graph's container
 
+
+
+export function NewYorkGraph() {
+
+const [isNYCGraph, setIsNYCGraph] = useState(false)
+
+useEffect(() => {
+
+  // setting the scale of the graph's container
 let margin = { top: 70, right: 30, bottom: 40, left: 80 };
 let width = 1200 - margin.left - margin.right;
 let height = 500 - margin.top - margin.bottom;
@@ -48,7 +56,7 @@ let dataset = [
 
 // New York Population Dataset
 
-d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").then(function (data){
+d3.csv("/population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").then(function (data){
 
     let NYC = (data[0])
     let date = (Object.keys(NYC).slice(0,10))
@@ -62,6 +70,7 @@ d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").t
 
 // setting y axis scale
 
+// TODO programtic way to set y axis based on the population size
 x.domain(d3.extent(updatedDataset, d => d.date));
 y.domain([7000000, d3.max(updatedDataset, d => d.population)]);
 
@@ -245,12 +254,7 @@ svg.append("path")
     toolTip.style("display", "none");
   });
 });
-
-export function nycGraph() {
-  const [isNYCGraph, setIsNYCGraph] = useState(false)
-
-  useEffect(() => {
-    setIsNYCGraph(true)
+setIsNYCGraph(true)
   }, [])
 
   return (

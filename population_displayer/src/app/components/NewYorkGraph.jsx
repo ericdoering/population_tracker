@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import * as d3 from "d3";
 
 
@@ -8,6 +8,7 @@ import * as d3 from "d3";
 export function NewYorkGraph() {
 
 const [isNYCGraph, setIsNYCGraph] = useState(false)
+const ref = useRef();
 
 useEffect(() => {
 
@@ -26,7 +27,7 @@ let y = d3.scaleLinear()
 
 // creating the container for the graph
 
-let svg = d3.select("#chart-container-NYC")
+let svg = d3.select(ref.current)
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -258,12 +259,15 @@ setIsNYCGraph(true)
   }, [])
 
   return (
-    <>
-    {isNYCGraph ? <div>
-        <div className="chart-container-NYC"></div>
+    <div className="min-h-screen flex items-center justify-center">
+    {isNYCGraph ? (
+      <div>
+        <div className="chart-container-NYC" ref={ref} ></div>
         <div className="tool-tip-NYC"></div>
-      </div> : <h1>"Loading"</h1>
-      }
-    </>
+      </div>
+    ) : (
+      <h1>Loading</h1>
+    )}
+  </div>
   )
 }

@@ -5,7 +5,6 @@ import * as d3 from "d3";
 
 
 
-
 export function NewYorkGraph() {
 
   let data = [
@@ -21,8 +20,6 @@ export function NewYorkGraph() {
     { date: new Date("2022-10-01"), population: 600 },
   ];
   
-  let NYCData;
-
   d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").then(function (rawData){
 
     let NYC = (rawData[0])
@@ -30,16 +27,12 @@ export function NewYorkGraph() {
     let population = (Object.values(NYC).slice(0,10))
 
 
-    NYCData = data.map((entry, index) => ({
+    data = data.map((entry, index) => ({
       date: new Date(date[index]),
       population: parseInt(population[index], 10),
     }));
 
-    console.log(NYCData)
-
-
   })
-
 
 
   const createGraph = async () => {
@@ -84,6 +77,31 @@ export function NewYorkGraph() {
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
         .attr("d", valueLine)
+
+
+        // vertical graph lines
+
+        svg.selectAll("xGrid")
+        .data(x.ticks().slice(1))
+        .join("line")
+        .attr("x1", d => x(d))
+        .attr("x2", d => x(d))
+        .attr("y1", 0)
+        .attr("y2", height)
+        .attr("stroke", "#e0e0e0")
+        .attr("stroke-width", .5)
+
+        // horizontal graph lines
+
+        svg.selectAll("yGrid")
+        .data(y.ticks().slice(1))
+        .join("line")
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", d => y(d))
+        .attr("y2", d => y(d))
+        .attr("stroke", "#e0e0e0")
+        .attr("stroke-width", .5)
     }
           
   useEffect(() => {

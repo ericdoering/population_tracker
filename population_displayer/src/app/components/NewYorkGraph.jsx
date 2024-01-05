@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import * as d3 from "d3";
 
 
@@ -19,6 +19,7 @@ export function NewYorkGraph() {
     { date: new Date("2022-09-01"), population: 280 },
     { date: new Date("2022-10-01"), population: 600 },
   ];
+
   
   d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").then(function (rawData){
 
@@ -27,12 +28,13 @@ export function NewYorkGraph() {
     let population = (Object.values(NYC).slice(0,10))
 
 
-    data = data.map((entry, index) => ({
+    let updatedDataset = data.map((entry, index) => ({
       date: new Date(date[index]),
       population: parseInt(population[index], 10),
     }));
-
   })
+
+
 
 
   const createGraph = async () => {

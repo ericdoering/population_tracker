@@ -5,41 +5,13 @@ import * as d3 from "d3";
 
 
 
-export function NewYorkGraph() {
+export function NewYorkGraph(props){
 
-  let data = [
-    { date: new Date("2022-01-01"), population: 200 },
-    { date: new Date("2022-02-01"), population: 250 },
-    { date: new Date("2022-03-01"), population: 180 },
-    { date: new Date("2022-04-01"), population: 300 },
-    { date: new Date("2022-05-01"), population: 280 },
-    { date: new Date("2022-06-01"), population: 220 },
-    { date: new Date("2022-07-01"), population: 300 },
-    { date: new Date("2022-08-01"), population: 450 },
-    { date: new Date("2022-09-01"), population: 280 },
-    { date: new Date("2022-10-01"), population: 600 },
-  ];
+  let data = props.props
 
-  
-  d3.csv("population_data/New_York_City_Population_by_Borough__1950_-_2040.csv").then(function (rawData){
-
-    let NYC = (rawData[0])
-    let date = (Object.keys(NYC).slice(0,10))
-    let population = (Object.values(NYC).slice(0,10))
-
-
-    let updatedDataset = data.map((entry, index) => ({
-      date: new Date(date[index]),
-      population: parseInt(population[index], 10),
-    }));
-  })
-
-
-
-
+  const [hasGraphRendered, setHasGraphRendered] = useState(false)
   const createGraph = async () => {
 
-    let parseTime = d3.timeParse("%Y-%m-%d");
 
       data.forEach((d) => {
         d.date = (d.date);
@@ -59,8 +31,8 @@ export function NewYorkGraph() {
       const x = d3.scaleTime().range([0, width]);
       const y = d3.scaleLinear().range([height, 0]);
 
-          x.domain(d3.extent(data, (d) => { return d.date; }));
-          y.domain([0, d3.max(data, (d) => { return d.value; })]);
+          x.domain(d3.extent(data, (d) => { return new Date(d.date); }));
+          y.domain([7000000, d3.max(data, (d) => { return d.population; })]);
 
           svg.append("g")
           .attr("transform", `translate(0, ${height})`)
@@ -69,8 +41,8 @@ export function NewYorkGraph() {
           .call(d3.axisLeft(y));
 
       const valueLine = d3.line()
-          .x((d) => { return x(d.date); })
-          .y((d) => { return y(d.value); });
+          .x((d) => { return x(new Date(d.date)); })
+          .y((d) => { return y(d.population); });
 
         svg.append("path")
         .data([data])
@@ -104,11 +76,15 @@ export function NewYorkGraph() {
         .attr("y2", d => y(d))
         .attr("stroke", "#e0e0e0")
         .attr("stroke-width", .5)
+
+        setHasGraphRendered(true)
     }
           
   useEffect(() => {
-    createGraph();
-  }, []);
+    if (data.length && !hasGraphRendered) {
+      createGraph();
+    }
+  }, [data]);
 
 
   return (

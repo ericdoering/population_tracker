@@ -4,8 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import * as d3 from "d3";
 
 
-
-export function NewYorkGraph(props){
+export function NYCGraph(props){
 
   let data = props.props
 
@@ -94,4 +93,4 @@ export function NewYorkGraph(props){
      </div>
      </>
   );
-}
+};

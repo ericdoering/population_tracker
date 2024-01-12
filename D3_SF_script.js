@@ -153,15 +153,15 @@ svg.append("text")
     .style("font-family", "sans-serif")
     .text("Year");
 
-  // adding source credit
+            // adding source credit
 
-svg.append("text")
-.attr("class", "source-credit")
-.attr("x", width - 1150)
-.attr("y", height + margin.bottom + 0.1)
-.style("font-size", "7px")
-.style("font-family", "sans-serif")
-.text("Source: https://www.macrotrends.net/cities/23130/san-francisco/population")
+          svg.append("text")
+          .attr("class", "source-credit")
+          .attr("x", width - 1150)
+          .attr("y", height + margin.bottom + 0.1)
+          .style("font-size", "7px")
+          .style("font-family", "sans-serif")
+          .text("Source: https://www.macrotrends.net/cities/23130/san-francisco/population")
 
 
 let line = d3.line()

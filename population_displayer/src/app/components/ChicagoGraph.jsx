@@ -76,6 +76,53 @@ export function ChicagoGraph(props){
         .attr("stroke", "#e0e0e0")
         .attr("stroke-width", .5)
 
+        // title of the graph
+
+        svg.append("text")
+        .attr("class", "chart-title")
+        .attr("x", margin.right + 200)
+        .attr("y", margin.top - 100)
+        .style("font-size", "24px")
+        .style("font-weight", "bold")
+        .style("font-family", "sans-serif")
+        .text("Historical and Projected Population of Chicago (1950 - 2040)")
+
+
+        // adding y axis title
+
+        svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("fill", "#777")
+        .style("font-family", "sans-serif")
+        .text("Total Population")
+        
+        // adding x axis title
+        
+        svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "middle")
+        .attr("x", width - 570)
+        .attr("y", height + 40)
+        .style("fill", "#777")
+        .style("font-size", "14px")
+        .style("font-family", "sans-serif")
+        .text("Year");
+
+        // adding source credit
+
+        svg.append("text")
+        .attr("class", "source-credit")
+        .attr("x", width - 1150)
+        .attr("y", height + margin.bottom + 0.1)
+        .style("font-size", "7px")
+        .style("font-family", "sans-serif")
+        .text("Source: https://www.macrotrends.net/cities/22956/chicago/population")
+
         setHasGraphRendered(true)
     }
           

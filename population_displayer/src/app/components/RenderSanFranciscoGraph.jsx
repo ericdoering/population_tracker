@@ -45,10 +45,11 @@ export function RenderSanFranciscoGraph () {
 
   return (
     <>
-      <h1>Major City Population Data</h1>
+      <div>
       {sanFranciscoPopulationMap &&
       <SanFranciscoGraph props={sanFranciscoPopulationMap} />
       } 
+      </div>
     </>
   );
 };

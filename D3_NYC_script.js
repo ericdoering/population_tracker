@@ -159,13 +159,13 @@ svg.append("text")
 
           // adding source credit
 
-          svg.append("text")
-          .attr("class", "source-credit")
-          .attr("x", width - 1150)
-          .attr("y", height + margin.bottom + 0.1)
-          .style("font-size", "7px")
-          .style("font-family", "sans-serif")
-          .text("Source: https://data.cityofnewyork.us/")
+        svg.append("text")
+        .attr("class", "source-credit")
+        .attr("x", width - 1150)
+        .attr("y", height + margin.bottom + 0.1)
+        .style("font-size", "7px")
+        .style("font-family", "sans-serif")
+        .text("Source: https://data.cityofnewyork.us/")
 
 
 

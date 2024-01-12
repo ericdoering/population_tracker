@@ -18,14 +18,22 @@ export function SanFranciscoGraph(props){
       });
 
       const margin = { top: 70, right: 30, bottom: 40, left: 80 };
-      const width = 1200 - margin.left - margin.right;
+      const width = 800 - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
+
+      
+
   
       const svg = d3.select("body").append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
+          .style("margin-left", "auto")
+          .style("margin-right", "auto")
+          .style("margin-top", "10%")
           .append("g")
           .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+      
 
       const x = d3.scaleTime().range([0, width]);
       const y = d3.scaleLinear().range([height, 0]);
@@ -43,13 +51,23 @@ export function SanFranciscoGraph(props){
           .x((d) => { return x(new Date(d.date)); })
           .y((d) => { return y(d.population); });
 
-        svg.append("path")
-        .data([data])
-        .attr("class", "line")
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 1.5)
-        .attr("d", valueLine)
+          const path = svg.append("path")
+          .data([data])
+          .attr("class", "line")
+          .attr("fill", "none")
+          .attr("stroke", "navy")
+          .attr("stroke-width", 1.5)
+          .attr("d", valueLine);
+
+          const totalLength = path.node().getTotalLength();
+
+          path
+          .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
+          .attr('stroke-dashoffset', totalLength)
+          .transition()
+          .duration(2000) // Animation duration in milliseconds
+          .attr('stroke-dashoffset', 0);
+
 
 
         // vertical graph lines
@@ -80,9 +98,9 @@ export function SanFranciscoGraph(props){
 
         svg.append("text")
         .attr("class", "chart-title")
-        .attr("x", margin.right + 200)
+        .attr("x", margin.right)
         .attr("y", margin.top - 100)
-        .style("font-size", "24px")
+        .style("font-size", "20px")
         .style("font-weight", "bold")
         .style("font-family", "sans-serif")
         .text("Historical and Projected Population of San Francisco (1950 - 2040)")
@@ -105,7 +123,7 @@ export function SanFranciscoGraph(props){
         svg.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "middle")
-        .attr("x", width - 570)
+        .attr("x", width - 400)
         .attr("y", height + 40)
         .style("fill", "#777")
         .style("font-size", "14px")
@@ -121,7 +139,22 @@ export function SanFranciscoGraph(props){
         .style("font-size", "7px")
         .style("font-family", "sans-serif")
         .text("Source: https://www.macrotrends.net/cities/23130/san-francisco/population")
-        
+
+        // Adding cicles at intersections
+
+        svg.selectAll("circle")
+        .data(data)
+        .enter().append("circle")
+        .attr("class", "data-point")
+        .attr("cx", d => x(new Date(d.date)))
+        .attr("cy", d => y(d.population))
+        .attr("r", 4)
+        .attr("fill", "navy")
+        .style("opacity", 0)
+        .transition()
+        .duration(1000) 
+        .style("opacity", 1);  
+
 
         setHasGraphRendered(true)
     }

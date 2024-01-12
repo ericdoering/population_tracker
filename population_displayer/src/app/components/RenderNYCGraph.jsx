@@ -46,10 +46,11 @@ export function RenderNYCGraph () {
 
   return (
     <>
-      <h1>Major City Population Data</h1>
-      {nycPopulationMap &&
-      <NYCGraph props={nycPopulationMap} />
-      } 
+      <div>
+        {nycPopulationMap &&
+        <NYCGraph props={nycPopulationMap} />
+        } 
+      </div>
     </>
   );
 };

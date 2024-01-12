@@ -41,14 +41,15 @@ export function RenderChicagoGraph () {
       });
   }, []); // The empty dependency array ensures the effect runs only once when the component mounts
 
-  
+
 
   return (
     <>
-      <h1>Major City Population Data</h1>
-      {chicagoPopulationMap &&
-      <ChicagoGraph props={chicagoPopulationMap} />
-      } 
+      <div>
+        {chicagoPopulationMap &&
+        <ChicagoGraph props={chicagoPopulationMap} />
+        } 
+      </div>
     </>
   );
 };

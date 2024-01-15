@@ -24,15 +24,23 @@ export function SanFranciscoGraph(props){
       
 
   
-      const svg = d3.select("body").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .style("margin-left", "auto")
-          .style("margin-right", "auto")
-          .style("margin-top", "10%")
-          .append("g")
-          .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    const svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .style("margin-left", "auto")
+    .style("margin-right", "auto")
+    .style("margin-top", "10%")
+    .append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+    const borderPath = svg.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("height", height)
+    .attr("width", width)
+    .style("stroke", "black")
+    .style("fill", "none")
+    .style("stroke-width", "1px");
       
 
       const x = d3.scaleTime().range([0, width]);

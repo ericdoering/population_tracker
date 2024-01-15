@@ -31,8 +31,8 @@ export function NYCGraph(props){
           .append("g")
           .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-      const x = d3.scaleTime().range([0, width]);
-      const y = d3.scaleLinear().range([height, 0]);
+          const x = d3.scaleTime().range([0, width]);
+          const y = d3.scaleLinear().range([height, 0]);
 
           x.domain(d3.extent(data, (d) => { return new Date(d.date); }));
           y.domain([7000000, d3.max(data, (d) => { return d.population; })]);

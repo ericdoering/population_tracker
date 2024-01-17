@@ -24,7 +24,7 @@ export function SanFranciscoGraph(props){
       
 
   
-    const svg = d3.select("body").append("svg")
+    const svg = d3.select("body").append("svg").attr('id', 'sf-graph-svg')
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .style("margin-left", "auto")
@@ -172,6 +172,12 @@ export function SanFranciscoGraph(props){
       createGraph();
     }
   }, [data]);
+
+  useEffect(() => {
+    return () => {
+      d3.selectAll("#sf-graph-svg").remove(); 
+    }
+  }, []);
 
 
   return (

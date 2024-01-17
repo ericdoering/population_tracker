@@ -22,7 +22,7 @@ export function NYCGraph(props){
       const width = 800 - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
   
-      const svg = d3.select("body").append("svg")
+      const svg = d3.select("body").append("svg").attr('id', 'nyc-graph-svg')
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .style("margin-left", "auto")
@@ -161,6 +161,11 @@ export function NYCGraph(props){
     }
   }, [data]);
 
+  useEffect(() => {
+    return () => {
+      d3.selectAll("#nyc-graph-svg").remove(); 
+    }
+  }, []);
 
   return (
      <>

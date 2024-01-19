@@ -87,7 +87,7 @@ export function SanFranciscoGraph(props){
         .attr("x2", d => x(d))
         .attr("y1", 0)
         .attr("y2", height)
-        .attr("stroke", "#e0e0e0")
+        .attr("stroke", "#999999")
         .attr("stroke-width", .5)
 
         // horizontal graph lines
@@ -99,7 +99,7 @@ export function SanFranciscoGraph(props){
         .attr("x2", width)
         .attr("y1", d => y(d))
         .attr("y2", d => y(d))
-        .attr("stroke", "#e0e0e0")
+        .attr("stroke", "#999999")
         .attr("stroke-width", .5)
 
         // title of the graph
@@ -142,7 +142,7 @@ export function SanFranciscoGraph(props){
 
         svg.append("text")
         .attr("class", "source-credit")
-        .attr("x", width - 1150)
+        .attr("x", width - 750)
         .attr("y", height + margin.bottom + 0.1)
         .style("font-size", "7px")
         .style("font-family", "sans-serif")

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import { SanFranciscoGraph } from './SanFranciscoGraph';
+import { ChatGPTButton } from '../utilities/ChatGPTButton';
 
 
 export function RenderSanFranciscoGraph () {
@@ -45,6 +46,7 @@ export function RenderSanFranciscoGraph () {
 
   return (
     <>
+      <ChatGPTButton />
       <div>
       {sanFranciscoPopulationMap &&
       <SanFranciscoGraph props={sanFranciscoPopulationMap} />

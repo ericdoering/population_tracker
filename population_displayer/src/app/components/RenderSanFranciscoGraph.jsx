@@ -46,7 +46,7 @@ export function RenderSanFranciscoGraph () {
 
   return (
     <>
-      <ChatGPTButton />
+      <ChatGPTButton city={"San Francisco's"} />
       <div>
       {sanFranciscoPopulationMap &&
       <SanFranciscoGraph props={sanFranciscoPopulationMap} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { API_KEY } from  "../../app/constants/api_variables"
+import { API_KEY } from  "../../app/constants/api_consts"
 
 const apiKey = API_KEY
 
@@ -47,7 +47,9 @@ export function ChatGPTButton({ city }) {
         body: JSON.stringify(apiRequestBody)
       });
 
-      console.log("RESPONSE!!!!", response)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
       const data = await response.json();
 
@@ -58,7 +60,7 @@ export function ChatGPTButton({ city }) {
       }]);
       }
       else {
-        message: setMessages(["San Franscisco Data unable to be synthesized..."])
+        setMessages([{ message: "San Francisco Data unable to be synthesized...", sender: "ChatGPT" }]);
       }
     } catch (error) {
       console.error('Error fetching ChatGPT response:', error);

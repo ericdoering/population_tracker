@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import { ChicagoGraph } from './ChicagoGraph';
+import { ChatGPTButton } from '../utilities/ChatGPTButton';
 
 
 export function RenderChicagoGraph () {
@@ -46,6 +47,7 @@ export function RenderChicagoGraph () {
   return (
     <>
       <div>
+        <ChatGPTButton city={"Chicago"} />
         {chicagoPopulationMap &&
         <ChicagoGraph props={chicagoPopulationMap} />
         } 

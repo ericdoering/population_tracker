@@ -29,7 +29,7 @@ export function SanFranciscoGraph(props){
     .attr("height", height + margin.top + margin.bottom)
     .style("margin-left", "auto")
     .style("margin-right", "auto")
-    .style("margin-top", "10%")
+    .style("margin-top", "5%")
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 

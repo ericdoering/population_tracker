@@ -72,3 +72,43 @@ rect {
     opacity: 1;
   }
 }
+
+.word {
+  font-size: small;
+}
+
+.text-container {
+  max-width: 120px;
+  word-wrap: break-word;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 15px;
+  color: rgb(167, 15, 15);
+  aspect-ratio: 1;
+  position: relative;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #000;
+}
+.loader::before {
+  box-shadow: -25px 0;
+  animation: l8-1 0.8s infinite linear;
+}
+.loader::after {
+  transform: rotate(0deg) translateX(25px);
+  animation: l8-2 0.8s infinite linear;
+}
+
+@keyframes l8-1 {
+    100%{transform: translateX(25px)}
+}
+@keyframes l8-2 {
+    100%{transform: rotate(-180deg) translateX(25px)}
+}

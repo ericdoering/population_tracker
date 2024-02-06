@@ -74,15 +74,16 @@ rect {
 }
 
 .word {
-  font-size: small;
+  font-size: xx-small;
 }
 
 .text-container {
-  max-width: 120px;
+  max-width: 140px;
+  max-height: 500px;
   word-wrap: break-word;
+  white-space: pre-line; 
 }
 
-/* HTML: <div class="loader"></div> */
 .loader {
   width: 15px;
   color: rgb(167, 15, 15);

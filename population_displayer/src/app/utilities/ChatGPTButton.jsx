@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { API_KEY } from "../../app/constants/api_consts";
 import { Loader } from "../components/Loader";
+import { AnalyticsText } from "../components/AnalyticsText";
 
 const apiKey = API_KEY;
 
@@ -51,9 +52,9 @@ export const ChatGPTButton = ({ city }) => {
         console.log("Delayed for 3 seconds.");
     
         // Inside the setTimeout callback
-        setFacts("-This city has seen a massive influx of people since the turn of the century. -This city's population increase can be attributed to new industy and immigration. -Many TV and media outlets have romantisized the city and made it a hub for new transplants");
+        setFacts(`-This city has seen a massive influx of people since the turn of the century, -particularly in 1915 where world events were causing mass migration. -This city's population increase can be attributed to new industy and immigration, The paper boom caused a massive need for workers and office staff. Many TV and media outlets have romantisized the city and made it a hub for new transplants, particularly 'New To Town'.`);
         setIsLoading(false);
-      }, 3000);  // Adjust the delay time as needed
+      }, 1000);  // Adjust the delay time as needed
     }
     
     // Call the timeout function
@@ -64,16 +65,12 @@ export const ChatGPTButton = ({ city }) => {
       <>
         <div className="fixed top-20 right-20 transform -translate-x-1/2 text-center">
               <div>
-                  <button className="bg-red-800 block mb-2 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black" onClick={callOpenAIAPI}>
+                  <button className="bg-red-800 block hover:bg-red-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black" onClick={callOpenAIAPI}>
                     Analytics
                   </button>
                   {fact !== "" ? (
-                    <div className="word-by-word text-container">
-                      {fact.split(' ').map((word, index) => (
-                      <span key={index} className="word" style={{ animationDelay: `${index * 0.1}s`, animationDuration: '0.5s' }}>{word}&nbsp;</span>
-                      ))}
-                    </div>
-                    ) : null}
+                  <AnalyticsText fact={fact} />
+                  ) : null}
               </div>
           <div>
             {isLoading ? 

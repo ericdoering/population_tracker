@@ -39,7 +39,7 @@ const App = () => {
           className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
           onClick={() => dispatch({ type: 'San Francisco' })}>San Francisco, CA</button>
       </div>
-      <div>
+      <div className='bg-gray-500'>
       { state.city }
       </div>
     </div>

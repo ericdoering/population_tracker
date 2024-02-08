@@ -75,13 +75,13 @@ rect {
 
 .word {
   font-size: xx-small;
+  display: inline-block;
+  white-space: pre-wrap; 
 }
 
 .text-container {
-  max-width: 140px;
-  max-height: 500px;
+  max-width: 140px; /* Adjust as needed */
   word-wrap: break-word;
-  white-space: pre-line; 
 }
 
 .loader {

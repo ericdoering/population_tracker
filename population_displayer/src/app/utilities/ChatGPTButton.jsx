@@ -10,6 +10,7 @@ const apiKey = API_KEY;
 export const ChatGPTButton = ({ city }) => {
   const [fact, setFacts] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [factsOnPage, setFactsOnPage] = useState(false);
 
   async function callOpenAIAPI() {
     // console.log("Calling the OpenAI API");
@@ -20,7 +21,7 @@ export const ChatGPTButton = ({ city }) => {
     //   messages: [
     //     {
     //       role: "user",
-    //       content: `Give 3 brief bullet points on the population trends of ${city}
+    //       content: Give 3 brief sentences on the population trends of ${city}. Make them brief yet specific. Don't add an actual bullet point to the sentence and make sure each sentence ends with only a period "."
     //       do not give specific dates and numbers`,
     //     },
     //   ],
@@ -52,32 +53,37 @@ export const ChatGPTButton = ({ city }) => {
         console.log("Delayed for 3 seconds.");
     
         // Inside the setTimeout callback
-        setFacts(`-This city has seen a massive influx of people since the turn of the century, -particularly in 1915 where world events were causing mass migration. -This city's population increase can be attributed to new industy and immigration, The paper boom caused a massive need for workers and office staff. Many TV and media outlets have romantisized the city and made it a hub for new transplants, particularly 'New To Town'.`);
+        setFacts(`This city has seen a massive influx of people since the turn of the century, particularly in 1915 where world events were causing mass migration. This city's population increase can be attributed to new industy and immigration, The paper boom caused a massive need for workers and office staff. Many TV and media outlets have romantisized the city and made it a hub for new transplants, particularly 'New To Town'.`);
         setIsLoading(false);
+        setFactsOnPage(true)
       }, 1000);  // Adjust the delay time as needed
     }
     
     // Call the timeout function
     timeout();
   }
-  console.log(fact);
+  
   return (
-      <>
-        <div className="fixed top-20 right-20 transform -translate-x-1/2 text-center">
-              <div>
-                  <button className="bg-red-800 block hover:bg-red-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black" onClick={callOpenAIAPI}>
-                    Analytics
-                  </button>
-                  {fact !== "" ? (
-                  <AnalyticsText fact={fact} />
-                  ) : null}
-              </div>
+    <>
+    <div className="text-center">
+    <div className="fixed top-20 right-20 transform -translate-x-1/2 text-center" style={{ minWidth: "140px" }}>
+      <div>
+        <button className="bg-red-800 block hover:bg-red-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black" onClick={callOpenAIAPI}>
+          Analytics
+        </button>
+        {fact !== "" && (
           <div>
-            {isLoading ? 
-              <Loader /> : null
-            }
+            <AnalyticsText fact={fact} />
           </div>
+        )}
       </div>
-    </>
+      <div>
+        {isLoading && !factsOnPage ? 
+          <Loader /> : null
+        }
+      </div>
+    </div>
+    </div>
+  </>
   );
 };

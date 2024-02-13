@@ -113,3 +113,25 @@ rect {
 @keyframes l8-2 {
     100%{transform: rotate(-180deg) translateX(25px)}
 }
+
+.header {
+  border: 10px solid rgb(56, 56, 56);
+}
+
+.footer {
+  position: fixed; 
+  left: 0; 
+  bottom: 0; 
+  width: 100%; 
+  border-top: 20px solid rgb(56, 56, 56); 
+  background-color: rgb(56, 56, 56); 
+}
+
+.city-thumbnail {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; 
+}
+
+.city-thumbnail.loaded {
+  opacity: 1;
+}

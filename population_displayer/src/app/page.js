@@ -1,9 +1,13 @@
 "use client";
 
 import React, { useState, useReducer } from 'react';
+import Image from 'next/image';
 import { RenderNYCGraph } from "../app/components/RenderNYCGraph";
 import { RenderChicagoGraph } from "../app/components/RenderChicagoGraph"
 import { RenderSanFranciscoGraph } from "./components/RenderSanFranciscoGraph";
+import chicago from "../../assets/Chicago.png";
+import nyc from "../../assets/NYC.png";
+import sanfrancisco from "../../assets/san_francisco.png"
 
 const initialState = {
   city: null,
@@ -24,25 +28,39 @@ const reducer = (state, action) => {
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [city, setCity] = useState(null);
+
+  const handleCityChange = (selectedCity) => {
+    setCity(selectedCity);
+  };
 
   return (
     <>
-    <div>
-      <div className="fixed top-20 left-40 transform -translate-x-1/2 text-center">
-        <button
-          className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
-          onClick={() => dispatch({ type: 'NYC' })}>New York City, NY</button>
-        <button
-          className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
-          onClick={() => dispatch({ type: 'Chicago' })}>Chicago, IL</button>
-        <button
-          className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
-          onClick={() => dispatch({ type: 'San Francisco' })}>San Francisco, CA</button>
-      </div>
-      <div className='bg-gray-500'>
-      { state.city }
-      </div>
-    </div>
+      <header className="header"></header>
+          <div className="fixed top-20 left-40 transform -translate-x-1/2 text-center">
+            <button
+              className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
+              onClick={() => dispatch({ type: 'NYC' }, handleCityChange("NYC"))}>New York City, NY</button>
+            <button
+              className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
+              onClick={() => dispatch({ type: 'Chicago' }, handleCityChange("Chicago"))}>Chicago, IL</button>
+            <button
+              className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
+              onClick={() => dispatch({ type: 'San Francisco' },  handleCityChange("San Francisco"))}>San Francisco, CA</button>
+            <div className='mt-20'>
+            <Image
+              height={300}
+              width={200}
+              alt="picture of selected city"
+              src={city === 'Chicago' ? chicago : (city === 'NYC' ? nyc : (city === 'San Francisco' ? sanfrancisco : ''))}
+              className={`rounded-xl city-thumbnail ${city ? 'loaded' : ''}`} 
+              />
+            </div>
+          </div>
+          <div className="bg-gray-500">
+          { state.city }
+        </div>
+      <footer className="footer"></footer>
     </>
   );
 };

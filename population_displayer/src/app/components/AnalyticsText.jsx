@@ -3,7 +3,7 @@
 export function AnalyticsText({ fact }) {
   return (
     <>
-      <div className="word-by-word text-container mt-4 text-center">
+      <div className="word-by-word text-container mt-6 text-center">
         {fact !== "" ? (
           <div>
             {fact.split('.').map((sentence, index) => (

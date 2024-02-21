@@ -27,22 +27,28 @@ const reducer = (state, action) => {
 };
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const [city, setCity] = useState(null);
+  let [state, dispatch] = useReducer(reducer, initialState);
+  let [city, setCity] = useState(null);
+  let cityData = {
+    'Chicago': chicago,
+    'NYC': nyc,
+    'San Francisco': sanfrancisco
+  };
 
   const handleCityChange = (selectedCity) => {
     setCity(selectedCity);
   };
+
 
   return (
     <>
       <header className="header"></header>
           <div className="fixed top-20 left-40 transform -translate-x-1/2 text-center">
             <button
-              className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
+              className="bg-blue-900 block mb-6 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
               onClick={() => dispatch({ type: 'NYC' }, handleCityChange("NYC"))}>New York City, NY</button>
             <button
-              className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
+              className="bg-blue-900 block mb-6 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
               onClick={() => dispatch({ type: 'Chicago' }, handleCityChange("Chicago"))}>Chicago, IL</button>
             <button
               className="bg-blue-900 block mb-8 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
@@ -52,8 +58,8 @@ const App = () => {
               height={300}
               width={200}
               alt="picture of selected city"
-              src={city === 'Chicago' ? chicago : (city === 'NYC' ? nyc : (city === 'San Francisco' ? sanfrancisco : ''))}
-              className={`rounded-xl city-thumbnail ${city ? 'loaded' : ''}`} 
+              src={city = cityData[city] || ""}
+              className={`rounded-xl city-thumbnail ${city ? 'loaded' : null}`} 
               />
             </div>
           </div>

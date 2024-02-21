@@ -56,7 +56,7 @@ export const ChatGPTButton = ({ city }) => {
   return (
     <>
     <div className="text-center">
-    <div className="fixed top-20 right-20 transform -translate-x-1/2 text-center" style={{ minWidth: "140px" }}>
+    <div className="fixed top-20 right-20 transform -translate-x-1/2 text-center">
       <div>
         <button className="bg-red-800 ml-6 block hover:bg-red-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black" onClick={callOpenAIAPI}>
           Analytics

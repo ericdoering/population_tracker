@@ -4,17 +4,14 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Population Displayer',
+  title: 'Population Plotter',
   description: 'Major city population dispalyer',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="../../src/favicon.ico" sizes="any" />
-      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
-}
+};

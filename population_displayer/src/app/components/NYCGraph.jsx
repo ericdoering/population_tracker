@@ -150,6 +150,8 @@ export function NYCGraph(props){
           .transition()
           .duration(1000) 
           .style("opacity", 1);  
+          
+          
 
 
         setHasGraphRendered(true)

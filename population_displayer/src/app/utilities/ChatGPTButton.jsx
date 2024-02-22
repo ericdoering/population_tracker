@@ -12,7 +12,9 @@ export const ChatGPTButton = ({ city }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [factsOnPage, setFactsOnPage] = useState(false);
 
+
   async function callOpenAIAPI() {
+    if(!factsOnPage){
     console.log("Calling the OpenAI API");
     setIsLoading(true)
 
@@ -52,27 +54,30 @@ export const ChatGPTButton = ({ city }) => {
         setFactsOnPage(true)
       });
   }
+}
   
   return (
     <>
     <div className="text-center">
-    <div className="fixed top-20 right-20 transform -translate-x-1/2 text-center">
-      <div>
-        <button className="bg-red-800 ml-6 block hover:bg-red-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black" onClick={callOpenAIAPI}>
-          Analytics
-        </button>
-        {fact !== "" && (
-          <div>
-            <AnalyticsText fact={fact} />
+      <div className="fixed top-20 right-20 transform -translate-x-1/2 text-center">
+        <div className="flex flex-col items-center justify-center">
+          <div className="mb-4"> 
+            <button className="bg-red-800 block hover:bg-red-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black" onClick={callOpenAIAPI}>
+              AI Analytics
+            </button>
+            {fact !== "" && (
+            <div className="mb-2">
+              <AnalyticsText fact={fact} />
+            </div>
+            )}
           </div>
-        )}
-      </div>
-      <div>
+        <div>
         {isLoading && !factsOnPage ? 
           <Loader /> : null
         }
+        </div>
+        </div>
       </div>
-    </div>
     </div>
   </>
   );

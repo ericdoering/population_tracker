@@ -27,30 +27,7 @@ rect {
   z-index: 1;
 }
 
-.tool-tip-NYC {
-  position: absolute;
-  padding: 10px;
-  background-color: steelblue;
-  color: white;
-  border: 1px solid white;
-  border-radius: 10px;
-  display: none;
-  opacity: 0.75;
-}
-
-.tool-tip-SF {
-  position: absolute;
-  padding: 10px;
-  background-color: steelblue;
-  color: white;
-  border: 1px solid white;
-  border-radius: 10px;
-  display: none;
-  opacity: 0.75;
-}
-
-
-.tool-tip-CH {
+.tool-tip {
   position: absolute;
   padding: 10px;
   background-color: steelblue;
@@ -80,12 +57,12 @@ rect {
 }
 
 .text-container {
-  max-width: 140px; /* Adjust as needed */
+  max-width: 8.75rem; 
   word-wrap: break-word;
 }
 
 .loader {
-  width: 15px;
+  width:  0.9375rem; 
   color: rgb(167, 15, 15);
   aspect-ratio: 1;
   position: relative;
@@ -135,3 +112,4 @@ rect {
 .city-thumbnail.loaded {
   opacity: 1;
 }
+

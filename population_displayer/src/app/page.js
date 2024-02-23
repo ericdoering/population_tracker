@@ -42,7 +42,10 @@ const App = () => {
 
   return (
     <>
-      <header className="header"></header>
+      <header className="header">
+        <h1 className="title">Population Plotter</h1>
+        <h1 className="about">About</h1>
+      </header>
           <div className="fixed top-20 left-40 transform -translate-x-1/2 text-center">
             <button
               className="bg-blue-900 block mb-6 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"

@@ -20,7 +20,6 @@ export function RenderNYCGraph () {
         date: d,
         population: population[i],
       }));
-      console.log(nycPopulationMap)
 
       return nycPopulationMap;
     } catch (error) {

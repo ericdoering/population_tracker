@@ -15,7 +15,6 @@ export const ChatGPTButton = ({ city }) => {
 
   async function callOpenAIAPI() {
     if(!factsOnPage){
-    console.log("Calling the OpenAI API");
     setIsLoading(true)
 
     const APIBody = {
@@ -31,7 +30,7 @@ export const ChatGPTButton = ({ city }) => {
         },
       ],
       temperature: 0,
-      max_tokens: 100,
+      max_tokens: 150,
       top_p: 1.0,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,

@@ -9,10 +9,9 @@ import chicago from "../../assets/Chicago.png";
 import nyc from "../../assets/NYC.png";
 import sanfrancisco from "../../assets/san_francisco.png";
 import { About } from "../app/components/About";
-import Link from 'next/link';
 
 const initialState = {
-  city: null,
+  city: undefined,
 };
 
 const reducer = (state, action) => {
@@ -30,7 +29,7 @@ const reducer = (state, action) => {
 
 const App = () => {
   let [state, dispatch] = useReducer(reducer, initialState);
-  let [selectedCity, setSelectedCity] = useState(null);
+  let [selectedCity, setSelectedCity] = useState(undefined);
   let [showAbout, setShowAbout] = useState(false);
 
   let cityData = {
@@ -43,10 +42,6 @@ const App = () => {
     const selectedCity = event.target.value;
     setSelectedCity(selectedCity);
     dispatch({ type: selectedCity });
-  };
-
-  const handleAboutClick = () => {
-    setShowAbout(true)
   };
 
   const toggleAbout = () => {
@@ -68,7 +63,7 @@ const App = () => {
           className="bg-blue-900 block mb-6 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-2xl shadow-black"
           value={selectedCity}
           onChange={handleCityChange}>
-          {selectedCity == null ? <option value="">Select a city</option> : <option disabled>Select a city</option>}
+          {selectedCity == undefined ? <option value="">Select a city</option> : <option disabled>Select a city</option>}
           <option value="NYC">New York City, NY</option>
           <option value="Chicago">Chicago, IL</option>
           <option value="San Francisco">San Francisco, CA</option>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Loader } from "../components/Loader";
 import { AnalyticsText } from "../components/AnalyticsText";
-import { apiKey } from "../constants/api_consts";
+// import { apiKey } from "../constants/api_consts";
  
 export const ChatGPTButton = ({ city }) => {
   const [fact, setFacts] = useState("");
@@ -10,6 +10,7 @@ export const ChatGPTButton = ({ city }) => {
 
 
   async function callOpenAIAPI() {
+    const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY
 
     if(!factsOnPage){
     setIsLoading(true)

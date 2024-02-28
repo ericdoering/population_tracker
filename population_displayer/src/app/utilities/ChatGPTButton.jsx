@@ -1,12 +1,8 @@
-"use client";
-
 import React, { useState } from "react";
-import { API_KEY } from "../../app/constants/api_consts";
 import { Loader } from "../components/Loader";
 import { AnalyticsText } from "../components/AnalyticsText";
-
-const apiKey = API_KEY;
-
+import { apiKey } from "../constants/api_consts";
+ 
 export const ChatGPTButton = ({ city }) => {
   const [fact, setFacts] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +10,7 @@ export const ChatGPTButton = ({ city }) => {
 
 
   async function callOpenAIAPI() {
+
     if(!factsOnPage){
     setIsLoading(true)
 
